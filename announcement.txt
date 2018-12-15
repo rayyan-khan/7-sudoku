@@ -1,0 +1,21 @@
+Hi,
+
+As mentioned in class, here is the HW for Monday.  The most important is to get through item 3:
+
+1)  Today we saw that you can process all of the puzzles in puzzles.txt if, within bruteForce, your set of choices isSYMSET - neighborsOfP where P is any open position AND your remove isInvalid.
+
+2)  The we saw that it really pays to reduce the number of choices that you have.  To that end, you should find the open position p that has the fewest number of symbols that could go into it (meaning not excluded by the neighbors of p).
+
+3)  However, it also makes sense to find a symbol that has the fewest number of possible positions that it can go into.  Once you have this, you will use the one that offers fewer choices (in item 2 and this one), and loop through each one of them in the bottom part of bruteForce.
+To do this part, it will probably make sense to compute nbrVals, a list of length n where the value at position p is the set of values of each nonempty neighbor of p.
+Then, for each constraint set and for each unplaced symbol within that constrain set, find out which set of positions it is not excluded from.  The smallest such set is the most constrained one.  What you are computing here is the way in which most humans solve sudoku.  If you don't get this, my best advice is to take a sudoku puzzle and solve it, noting how you deduce each new character you add in.
+Finally, the loop for looping through the set of choices at the bottom of bruteForce should now look like:
+for pos in poss:     # for each position in the position set
+  for sym in syms:   # for each symbol in the symbol set
+    newPzl = bruteForce(pzl with sym insterted at position pos)
+The implication is that at the end of step 2, you put the single position you have into poss, whilce the set of symbols you could place there becomes syms.  Then, once you have computed item 3, if the number of positions in item 3 is less than the number of symbols in item 2, update poss and syms appropriately.
+This should take your running time for all of puzzles.txt to about 10 seconds.
+
+4)  If item 2 has just one possible symbol, that means that the choice is forced.  It that case, doing item 3 would be pointless.  Therefore, wrap an if statement around item 3 so that it doesn't execute needlessly. You can improve this to where you take what you got in item 2 into account when your run item 3, so that you only are searching for fewer choices in item 3 when it might benefit you.
+
+If you do this much, you'll be set for Monday.
